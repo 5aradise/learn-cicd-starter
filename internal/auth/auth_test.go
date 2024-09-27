@@ -51,7 +51,7 @@ func TestGetAPIKey(t *testing.T) {
 	tests["invalid header content"] = test{
 		headers:    invalidContent,
 		wantAPIKey: "",
-		wantErr:    errors.New("malformed authorization heade"),
+		wantErr:    errors.New("malformed authorization header"),
 	}
 
 	for name, tc := range tests {

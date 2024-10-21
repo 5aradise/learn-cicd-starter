@@ -1,7 +1,15 @@
-FROM --platform=linux/amd64 debian:stable-slim
+FROM golang:alpine AS builder
 
-RUN apt-get update && apt-get install -y ca-certificates
+WORKDIR /go/src/app
 
-ADD notely /usr/bin/notely
+COPY . .
 
-CMD ["notely"]
+RUN go get
+
+RUN go build -ldflags="-w -s" -o /go/bin/app
+
+FROM alpine
+
+COPY --from=builder /go/bin/app /go/bin/app
+
+CMD ["/go/bin/app"]
